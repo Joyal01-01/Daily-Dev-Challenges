@@ -1,60 +1,63 @@
-name: Daily Challenge System (No Duplicate + Viral)
+name: Daily Challenge System (Viral & Fixed)
 
 on:
   schedule:
-    - cron: "0 3 * * *"
-  workflow_dispatch:
+    - cron: "0 3 * * *" # Runs every day at 3:00 AM
+  workflow_dispatch: # Allows you to click "Run workflow" manually
 
 jobs:
   daily-system:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
     steps:
-
-      # 🧠 STEP 1: Calculate Day
-      - name: Get current day
-        id: day
+      # 🧠 STEP 1: Calculate Day & Create Tasks
+      - name: Generate Challenges
         uses: actions/github-script@v7
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issues = await github.rest.issues.listForRepo({
+            // 1. Get all issues to calculate the current Day
+            const allIssues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              state: "all",
-              per_page: 100
+              state: "all"
             });
 
-            const day = Math.floor(issues.data.length / 5) + 1;
-            core.setOutput("day", day);
+            // Filter for only "Daily Challenge" issues to get an accurate day count
+            const challengeIssues = allIssues.data.filter(i => i.title.includes("Day"));
+            const currentDay = Math.floor(challengeIssues.length / 5) + 1;
+            
+            const tasks = [
+              "Create responsive navbar", "Build login form", "Create button animation",
+              "Fix CSS layout bug", "Create dark mode toggle", "Build to-do app",
+              "Create REST API", "Build responsive footer", "Create modal popup",
+              "Build image gallery", "Create form validation", "Build calculator app",
+              "Create dropdown menu", "Build profile card UI", "Create search bar",
+              "Build pagination system", "Create loading spinner", "Build tab system",
+              "Create accordion UI", "Build notification system"
+            ];
 
-      # 🔒 STEP 2: Close Previous Day Issues
-      - name: Close previous day issues
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const day = ${{ steps.day.outputs.day }};
-            const prevDay = day - 1;
+            const startIndex = (currentDay - 1) * 5;
 
-            if (prevDay <= 0) return;
-
-            const issues = await github.rest.issues.listForRepo({
+            // 2. Close Yesterday's Issues
+            const openIssues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: "open"
             });
 
-            for (const issue of issues.data) {
-              if (issue.title.includes(`Day ${prevDay}`)) {
-
+            for (const issue of openIssues.data) {
+              if (issue.title.includes(`Day ${currentDay - 1}`)) {
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: issue.number,
-                  body: `## ⏳ Challenge Closed
-
-Thanks for contributing 🙌  
-👉 Move to Day ${day} 🚀`
+                  body: `## ⏳ Challenge Closed\nMove to Day ${currentDay} 🚀`
                 });
-
                 await github.rest.issues.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
@@ -64,90 +67,26 @@ Thanks for contributing 🙌
               }
             }
 
-      # 🚀 STEP 3: Create UNIQUE Tasks
-      - name: Create unique challenges
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const day = ${{ steps.day.outputs.day }};
-
-            const tasks = [
-              "Create responsive navbar",
-              "Build login form",
-              "Create button animation",
-              "Fix CSS layout bug",
-              "Create dark mode toggle",
-              "Build to-do app",
-              "Create REST API",
-              "Build responsive footer",
-              "Create modal popup",
-              "Build image gallery",
-              "Create form validation",
-              "Build calculator app",
-              "Create dropdown menu",
-              "Build profile card UI",
-              "Create search bar",
-              "Build pagination system",
-              "Create loading spinner",
-              "Build tab system",
-              "Create accordion UI",
-              "Build notification system"
-            ];
-
-            const startIndex = (day - 1) * 5;
-
+            // 3. Create 5 New Challenges
             for (let i = 0; i < 5; i++) {
               const taskIndex = (startIndex + i) % tasks.length;
               const task = tasks[taskIndex];
-
               const level = i < 2 ? "easy" : i < 4 ? "medium" : "hard";
 
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: `Day ${day} - ${level.toUpperCase()} Task ${i+1}: ${task}`,
-                body: `
-### 🧠 Day ${day} Challenge
-
-### 🏷 Difficulty:
-${level}
-
-### 📌 Task:
-${task}
-
-### 📂 Folder:
-challenges/day-${day}/your-github-username/
-
----
-
-🔥 Complete daily to maintain your streak!
-                `,
+                title: `Day ${currentDay} - ${level.toUpperCase()} Task ${i+1}: ${task}`,
+                body: `### 🧠 Day ${currentDay} Challenge\n\n**Difficulty:** ${level}\n**Task:** ${task}\n**Folder:** challenges/day-${currentDay}/your-username/\n\n🔥 Solve this to keep your streak green!`,
                 labels: ["daily-challenge", level]
               });
             }
 
-      # 🏆 STEP 4: Viral Leaderboard
-      - name: Create leaderboard
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const day = ${{ steps.day.outputs.day }};
-
+            // 4. Create the Leaderboard
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🏆 Day ${day} Leaderboard`,
-              body: `
-## 🏆 Daily Leaderboard
-
-Top contributors will be featured 🚀
-
-💡 Want to be here?
-- Solve challenge
-- Submit PR
-- Get merged
-
-🔥 Stay consistent. Stay ahead.
-              `,
+              title: `🏆 Day ${currentDay} Leaderboard`,
+              body: `## 🏆 Day ${currentDay} Leaderboard\n\nSolve today's tasks and submit a PR to see your name here! 🚀`,
               labels: ["leaderboard"]
             });
