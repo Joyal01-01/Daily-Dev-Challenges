@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Card Hover Effect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>3D Card Hover Effect</h1>
+        <p class="subtitle">Move your mouse over the cards to see the 3D rotation effect</p>
+
+        <section class="demo-info">
+            <h2>Interactive 3D Cards</h2>
+            <p>Hover over the cards below to see dynamic 3D perspective transformations. The rotation is based on your mouse position relative to the card.</p>
+        </section>
+
+        <div class="cards-grid">
+            <!-- Card 1: Product Card -->
+            <div class="card-container">
+                <div class="card" data-index="0">
+                    <div class="card-inner">
+                        <div class="card-face card-front">
+                            <div class="card-icon">📱</div>
+                            <h3>Mobile App</h3>
+                            <p>Beautiful mobile experiences with responsive designs</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="back-content">
+                                <h4>Learn More</h4>
+                                <ul>
+                                    <li>Cross-platform support</li>
+                                    <li>Native performance</li>
+                                    <li>Touch optimized</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Web Development -->
+            <div class="card-container">
+                <div class="card" data-index="1">
+                    <div class="card-inner">
+                        <div class="card-face card-front">
+                            <div class="card-icon">🌐</div>
+                            <h3>Web Design</h3>
+                            <p>Modern web applications with cutting-edge technologies</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="back-content">
+                                <h4>Technology Stack</h4>
+                                <ul>
+                                    <li>HTML5 & CSS3</li>
+                                    <li>JavaScript ES6+</li>
+                                    <li>Web APIs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Design -->
+            <div class="card-container">
+                <div class="card" data-index="2">
+                    <div class="card-inner">
+                        <div class="card-face card-front">
+                            <div class="card-icon">🎨</div>
+                            <h3>UI Design</h3>
+                            <p>User-centric design with beautiful interactive elements</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="back-content">
+                                <h4>Design Principles</h4>
+                                <ul>
+                                    <li>User Experience</li>
+                                    <li>Visual Hierarchy</li>
+                                    <li>Accessibility</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Backend -->
+            <div class="card-container">
+                <div class="card" data-index="3">
+                    <div class="card-inner">
+                        <div class="card-face card-front">
+                            <div class="card-icon">⚙️</div>
+                            <h3>Backend Services</h3>
+                            <p>Scalable server-side solutions and API development</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="back-content">
+                                <h4>Backend Features</h4>
+                                <ul>
+                                    <li>RESTful APIs</li>
+                                    <li>Database Design</li>
+                                    <li>Security</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Analytics -->
+            <div class="card-container">
+                <div class="card" data-index="4">
+                    <div class="card-inner">
+                        <div class="card-face card-front">
+                            <div class="card-icon">📊</div>
+                            <h3>Analytics</h3>
+                            <p>Insights and metrics to drive data-driven decisions</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="back-content">
+                                <h4>Analytics Tools</h4>
+                                <ul>
+                                    <li>Real-time Tracking</li>
+                                    <li>Performance Metrics</li>
+                                    <li>User Behavior</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Support -->
+            <div class="card-container">
+                <div class="card" data-index="5">
+                    <div class="card-inner">
+                        <div class="card-face card-front">
+                            <div class="card-icon">💬</div>
+                            <h3>Support</h3>
+                            <p>24/7 dedicated support and customer service</p>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="back-content">
+                                <h4>Support Options</h4>
+                                <ul>
+                                    <li>Live Chat</li>
+                                    <li>Email Support</li>
+                                    <li>Documentation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="code-section">
+            <h2>Implementation Guide</h2>
+            
+            <div class="code-block">
+                <h3>CSS 3D Perspective Setup</h3>
+                <pre><code>/* Container for 3D perspective */
+.card-container {
+    perspective: 1000px;
+}
+
+/* Card rotation based on mouse position */
+.card {
+    transform-style: preserve-3d;
+    transition: transform 0.1s;
+}
+
+/* Calculate rotation:
+   rotateX = (mouse-y - card-center-y) / card-height * rotation-amount
+   rotateY = (mouse-x - card-center-x) / card-width * -rotation-amount
+*/</code></pre>
+            </div>
+
+            <div class="code-block">
+                <h3>JavaScript Mouse Tracking</h3>
+                <pre><code>card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    const rotateX = ((e.clientY - centerY) / rect.height) * 10;
+    const rotateY = ((e.clientX - centerX) / rect.width) * -10;
+    
+    card.style.transform = 
+        `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});</code></pre>
+            </div>
+
+            <div class="features">
+                <h3>Key Features</h3>
+                <ul>
+                    <li>✓ Mouse position-based 3D rotation</li>
+                    <li>✓ Smooth perspective transformation</li>
+                    <li>✓ Flip card animation on hover</li>
+                    <li>✓ Shadow depth effect</li>
+                    <li>✓ Responsive on all screen sizes</li>
+                    <li>✓ Hardware accelerated animations</li>
+                </ul>
+            </div>
+
+            <div class="use-cases">
+                <h3>Common Use Cases</h3>
+                <ul>
+                    <li>Product showcase applications</li>
+                    <li>Portfolio and gallery display</li>
+                    <li>Interactive service cards</li>
+                    <li>User profile cards</li>
+                    <li>Feature showcase pages</li>
+                    <li>E-commerce product cards</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="tips-section">
+            <h2>Tips & Best Practices</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>⚡ Performance</h4>
+                    <p>Use transform and opacity for animations. Avoid layout-triggering properties like width, height.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🎯 Precision</h4>
+                    <p>Calculate mouse position relative to card center for accurate rotation values.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>📱 Responsive</h4>
+                    <p>Test on mobile devices. Consider touch events for interactive features.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>♿ Accessibility</h4>
+                    <p>Ensure keyboard navigation works. Provide alternative information display methods.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

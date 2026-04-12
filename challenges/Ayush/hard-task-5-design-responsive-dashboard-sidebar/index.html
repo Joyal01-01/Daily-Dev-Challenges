@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Dashboard Sidebar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">📊</span>
+                    <span class="logo-text">Dashboard</span>
+                </div>
+                <button class="close-btn" id="closeSidebar">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3 class="section-title">Menu</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item active">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">🏠</span>
+                                <span class="nav-text">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" id="analyticsLink">
+                                <span class="nav-icon">📈</span>
+                                <span class="nav-text">Analytics</span>
+                                <span class="submenu-toggle">▼</span>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="#">Overview</a></li>
+                                <li><a href="#">Reports</a></li>
+                                <li><a href="#">Performance</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">👥</span>
+                                <span class="nav-text">Users</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" id="productsLink">
+                                <span class="nav-icon">📦</span>
+                                <span class="nav-text">Products</span>
+                                <span class="submenu-toggle">▼</span>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="#">All Products</a></li>
+                                <li><a href="#">Categories</a></li>
+                                <li><a href="#">Inventory</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">💬</span>
+                                <span class="nav-text">Messages</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="section-title">Settings</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">⚙️</span>
+                                <span class="nav-text">Configuration</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">👤</span>
+                                <span class="nav-text">Profile</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <span class="nav-icon">🔐</span>
+                                <span class="nav-text">Security</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">👨</div>
+                    <div class="user-details">
+                        <div class="user-name">John Doe</div>
+                        <div class="user-role">Admin</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-wrapper">
+            <!-- Header -->
+            <header class="header">
+                <button class="menu-toggle" id="menuToggle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <h1>Dashboard</h1>
+                <div class="header-actions">
+                    <button class="header-btn">🔔</button>
+                    <button class="header-btn">⚙️</button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="content">
+                <section class="card">
+                    <h2>Welcome to the Dashboard</h2>
+                    <p>This is a responsive dashboard with a collapsible sidebar. Try resizing your window or clicking the menu button to see the responsive behavior.</p>
+                </section>
+
+                <div class="cards-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <h3>Revenue</h3>
+                            <p class="stat-value">$45,231</p>
+                            <p class="stat-change">+12.5% from last month</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <h3>Users</h3>
+                            <p class="stat-value">2,543</p>
+                            <p class="stat-change">+8.2% from last month</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-content">
+                            <h3>Products</h3>
+                            <p class="stat-value">1,234</p>
+                            <p class="stat-change">+3.1% from last month</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">💬</div>
+                        <div class="stat-content">
+                            <h3>Messages</h3>
+                            <p class="stat-value">158</p>
+                            <p class="stat-change">+5.4% from last month</p>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="card">
+                    <h2>Features</h2>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <div>
+                                <h3>Responsive Sidebar</h3>
+                                <p>Automatic collapse on mobile devices with smooth animations</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <div>
+                                <h3>Nested Menus</h3>
+                                <p>Expandable submenu items with smooth transitions</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <div>
+                                <h3>Active States</h3>
+                                <p>Visual indicators for current page and navigation state</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <div>
+                                <h3>Mobile Optimized</h3>
+                                <p>Touch-friendly navigation with appropriate spacing</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <div>
+                                <h3>Keyboard Navigation</h3>
+                                <p>Full keyboard support for accessibility</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✓</span>
+                            <div>
+                                <h3>Smooth Animations</h3>
+                                <p>CSS transitions for all interactive elements</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h2>Implementation Details</h2>
+                    <div class="implementation">
+                        <h3>Key Technologies</h3>
+                        <ul>
+                            <li>CSS Grid and Flexbox for responsive layouts</li>
+                            <li>CSS transforms for smooth animations</li>
+                            <li>JavaScript for interactivity and state management</li>
+                            <li>Media queries for responsive breakpoints</li>
+                            <li>SVG icons for scalable graphics</li>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

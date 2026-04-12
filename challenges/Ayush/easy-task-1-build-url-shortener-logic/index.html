@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>URL Shortener Logic</h1>
+        <p class="description">Generate short, unique URLs using various algorithms</p>
+
+        <div class="shortener-section">
+            <h2>Create Short URL</h2>
+            
+            <div class="input-group">
+                <label for="longUrl">Enter Long URL:</label>
+                <input type="url" id="longUrl" placeholder="https://example.com/very/long/url" 
+                       value="https://github.com/ayush-bista/Daily-Dev-Challenges">
+                <small>Example URL is pre-filled</small>
+            </div>
+
+            <div class="algorithm-group">
+                <label>Select Algorithm:</label>
+                <div class="radio-buttons">
+                    <label class="radio-label">
+                        <input type="radio" name="algorithm" value="base62" checked>
+                        Base62 Encoding
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="algorithm" value="md5">
+                        MD5 Hash (First 6 chars)
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="algorithm" value="custom">
+                        Custom Short Code
+                    </label>
+                </div>
+            </div>
+
+            <div class="custom-code-group hidden">
+                <label for="customCode">Enter Custom Short Code:</label>
+                <input type="text" id="customCode" placeholder="my-link" maxlength="20">
+                <small>Letters, numbers, and hyphens only (max 20 chars)</small>
+            </div>
+
+            <button id="generateBtn" class="btn btn-primary">Generate Short URL</button>
+        </div>
+
+        <div class="results-section hidden">
+            <h2>Generated URLs</h2>
+            
+            <div class="result-item">
+                <div class="label">Original URL:</div>
+                <div class="value" id="originalUrl"></div>
+            </div>
+
+            <div class="result-item">
+                <div class="label">Short Code:</div>
+                <div class="value">
+                    <code id="shortCode"></code>
+                    <button class="copy-btn" onclick="copyToClipboard('shortCode')">📋 Copy</button>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <div class="label">Short URL:</div>
+                <div class="value">
+                    <code id="shortUrl"></code>
+                    <button class="copy-btn" onclick="copyToClipboard('shortUrl')">📋 Copy</button>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <div class="label">Algorithm Used:</div>
+                <div class="value" id="algorithmUsed"></div>
+            </div>
+
+            <button id="resetBtn" class="btn btn-secondary">Generate Another</button>
+        </div>
+
+        <div class="url-list-section">
+            <h2>Generated URLs History</h2>
+            <table class="url-table">
+                <thead>
+                    <tr>
+                        <th>Short Code</th>
+                        <th>Original URL</th>
+                        <th>Algorithm</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="urlTableBody">
+                    <tr class="empty-state">
+                        <td colspan="4">No URLs generated yet</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

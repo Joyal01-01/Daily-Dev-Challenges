@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debounce Function</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Debounce Function</h1>
+        <p class="description">Optimize function calls with debouncing - delay execution until user stops input</p>
+
+        <div class="demo-section">
+            <h2>Search Example (With Debouncing)</h2>
+            <p class="section-desc">Try typing in the search box - it will wait until you stop typing for 500ms before searching</p>
+            
+            <div class="search-group">
+                <input type="text" id="searchInput" class="search-input" placeholder="Type to search...">
+                <div class="stats">
+                    <span>Search calls: <strong id="searchCount">0</strong></span>
+                    <span>Debounce delay: <strong>500ms</strong></span>
+                </div>
+            </div>
+
+            <div id="searchResults" class="results"></div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Window Resize Example</h2>
+            <p class="section-desc">Resize your window - the resize event will be logged only when you stop resizing</p>
+            
+            <div class="resize-box">
+                <div id="resizeInfo" class="info-box">
+                    <p>Try resizing your window...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>API Request Simulation</h2>
+            <p class="section-desc">Each keystroke simulates an API request. Without debouncing, it would trigger on every character!</p>
+            
+            <div class="request-group">
+                <label>Username to check:</label>
+                <input type="text" id="usernameInput" class="form-input" placeholder="Enter username...">
+                <div class="request-status">
+                    <p>API Calls Made: <strong id="apiCallCount">0</strong></p>
+                    <p>Status: <span id="checkStatus">Ready</span></p>
+                    <p>Username Available: <span id="availabilityStatus">-</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="code-section">
+            <h2>Implementation Details</h2>
+            
+            <div class="code-example">
+                <h3>Basic Debounce Function</h3>
+                <pre><code>function debounce(func, delay) {
+    let timeoutId;
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+    };
+}</code></pre>
+            </div>
+
+            <div class="benefits">
+                <h3>Benefits of Debouncing</h3>
+                <ul>
+                    <li>✓ Reduces unnecessary function calls</li>
+                    <li>✓ Improves performance and reduces lag</li>
+                    <li>✓ Saves server requests and bandwidth</li>
+                    <li>✓ Better user experience with smoother interaction</li>
+                    <li>✓ Ideal for search, resize, scroll, and form validation</li>
+                </ul>
+            </div>
+
+            <div class="use-cases">
+                <h3>Common Use Cases</h3>
+                <ul>
+                    <li>Search input with autocomplete</li>
+                    <li>Window resize events</li>
+                    <li>Text input validation</li>
+                    <li>User typing detection</li>
+                    <li>Button rapid clicks</li>
+                    <li>Real-time data synchronization</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h2>Performance Comparison</h2>
+            <div class="comparison">
+                <div class="comparison-item">
+                    <h4>Without Debouncing</h4>
+                    <p class="bad">❌ 50+ API calls per search</p>
+                    <p class="bad">❌ High server load</p>
+                    <p class="bad">❌ Slow response</p>
+                </div>
+                <div class="comparison-item">
+                    <h4>With Debouncing (500ms)</h4>
+                    <p class="good">✓ 1-2 API calls per search</p>
+                    <p class="good">✓ Reduced server load</p>
+                    <p class="good">✓ Instant feedback</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
