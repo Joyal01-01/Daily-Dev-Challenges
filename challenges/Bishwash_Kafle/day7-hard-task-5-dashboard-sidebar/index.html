@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Dashboard Sidebar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">📊</span>
+                    <span class="logo-text">Dashboard</span>
+                </div>
+                <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Analytics</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Users</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Reports</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🚪</span>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Welcome to Dashboard</h1>
+                <div class="user-info">
+                    <span>👤 Bishwash Kafle</span>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="card">
+                    <h2>📊 Analytics</h2>
+                    <p>View detailed analytics and reports about your data.</p>
+                </div>
+
+                <div class="card">
+                    <h2>👥 User Management</h2>
+                    <p>Manage users, permissions, and access controls.</p>
+                </div>
+
+                <div class="card">
+                    <h2>📈 Growth</h2>
+                    <p>Monitor growth metrics and performance indicators.</p>
+                </div>
+
+                <div class="card">
+                    <h2>🔧 Configuration</h2>
+                    <p>Configure application settings and preferences.</p>
+                </div>
+
+                <div class="card">
+                    <h2>📋 Reports</h2>
+                    <p>Generate and download detailed reports.</p>
+                </div>
+
+                <div class="card">
+                    <h2>🔔 Notifications</h2>
+                    <p>Manage notifications and alerts.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to HTML Previewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Markdown to HTML Previewer</h1>
+        <div class="editor-container">
+            <div class="editor-section">
+                <h2>Markdown Input</h2>
+                <textarea 
+                    id="markdownInput" 
+                    class="markdown-textarea"
+                    placeholder="Enter your markdown here...
+
+# Heading 1
+## Heading 2
+### Heading 3
+
+**Bold text** and *italic text*
+
+- List item 1
+- List item 2
+- List item 3
+
+1. Numbered item 1
+2. Numbered item 2
+
+[Link text](https://example.com)
+
+\`inline code\`
+
+\`\`\`
+code block
+\`\`\`
+">[Enter markdown]</textarea>
+            </div>
+
+            <div class="preview-section">
+                <h2>HTML Preview</h2>
+                <div id="preview" class="preview-content"></div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button onclick="downloadHTML()" class="btn">Download HTML</button>
+            <button onclick="copyHTML()" class="btn">Copy HTML</button>
+            <button onclick="clearText()" class="btn btn-danger">Clear</button>
+        </div>
+
+        <div class="cheatsheet">
+            <h3>Quick Markdown Reference</h3>
+            <ul>
+                <li><code># Heading</code> - Heading levels 1-6</li>
+                <li><code>**bold**</code> - Bold text</li>
+                <li><code>*italic*</code> - Italic text</li>
+                <li><code>- item</code> - Unordered list</li>
+                <li><code>1. item</code> - Ordered list</li>
+                <li><code>[link](url)</code> - Link</li>
+                <li><code>\`code\`</code> - Inline code</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

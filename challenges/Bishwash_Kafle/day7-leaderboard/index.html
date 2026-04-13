@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 7 Leaderboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="leaderboard">
+            <h1>🏆 Day 7 Leaderboard</h1>
+            <div class="filter-section">
+                <button onclick="filterByCategory('all')" class="filter-btn active">All</button>
+                <button onclick="filterByCategory('easy')" class="filter-btn">Easy</button>
+                <button onclick="filterByCategory('medium')" class="filter-btn">Medium</button>
+                <button onclick="filterByCategory('hard')" class="filter-btn">Hard</button>
+            </div>
+
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Contributor</th>
+                        <th>Task</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalParticipants">0</span>
+                    <span class="stat-label">Total Participants</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="totalTasks">0</span>
+                    <span class="stat-label">Total Tasks Solved</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="totalPoints">0</span>
+                    <span class="stat-label">Total Points</span>
+                </div>
+            </div>
+
+            <div class="top-performers">
+                <h2>⭐ Top Performers</h2>
+                <div id="topPerformers" class="performers-list">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
