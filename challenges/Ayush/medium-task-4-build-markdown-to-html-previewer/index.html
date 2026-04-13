@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to HTML Previewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>Markdown to HTML Previewer</h1>
+            <p class="subtitle">Write Markdown on the left, preview HTML on the right</p>
+        </header>
+
+        <div class="editor-container">
+            <!-- Editor Panel -->
+            <div class="editor-panel">
+                <div class="panel-header">
+                    <h2>Markdown Input</h2>
+                    <div class="panel-actions">
+                        <button id="clearBtn" class="action-btn" title="Clear editor">🗑️ Clear</button>
+                        <button id="copyMarkdownBtn" class="action-btn" title="Copy markdown">📋 Copy</button>
+                    </div>
+                </div>
+                <textarea id="markdownInput" class="markdown-editor" placeholder="# Enter Markdown Here
+
+## Features
+- **Bold** text with **asterisks**
+- *Italic* text with *asterisks*
+- `Code snippets` with backticks
+- [Links](https://example.com)
+- Lists and more!"></textarea>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <div class="panel-header">
+                    <h2>HTML Preview</h2>
+                    <div class="panel-actions">
+                        <button id="copyHtmlBtn" class="action-btn" title="Copy HTML">📋 Copy HTML</button>
+                        <button id="downloadBtn" class="action-btn" title="Download as HTML">⬇️ Download</button>
+                    </div>
+                </div>
+                <div id="htmlPreview" class="html-preview"></div>
+            </div>
+        </div>
+
+        <!-- Markdown Syntax Guide -->
+        <section class="syntax-guide">
+            <h2>Markdown Syntax Guide</h2>
+            
+            <div class="guide-grid">
+                <div class="guide-item">
+                    <h3>Headings</h3>
+                    <pre><code># H1 Heading
+## H2 Heading
+### H3 Heading
+#### H4 Heading
+##### H5 Heading
+###### H6 Heading</code></pre>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Text Formatting</h3>
+                    <pre><code>**Bold text**
+*Italic text*
+***Bold & Italic***
+~~Strikethrough~~
+`Inline code`</code></pre>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Links & Images</h3>
+                    <pre><code>[Link text](https://example.com)
+[Link with title](url "Title")
+Direct URL: https://example.com</code></pre>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Lists</h3>
+                    <pre><code>- Unordered item 1
+- Unordered item 2
+  - Nested item
+
+1. Ordered item 1
+2. Ordered item 2
+3. Ordered item 3</code></pre>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Code Blocks</h3>
+                    <pre><code>\`\`\`javascript
+function hello() {
+    console.log("Hello, World!");
+}
+\`\`\`</code></pre>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Blockquotes</h3>
+                    <pre><code>> This is a blockquote
+> It can span multiple lines
+> 
+> And have multiple paragraphs</code></pre>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Horizontal Rule</h3>
+                    <pre><code>---
+or
+***
+or
+___</code></pre>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Tables</h3>
+                    <pre><code>| Header 1 | Header 2 |
+|----------|----------|
+| Cell 1   | Cell 2   |
+| Cell 3   | Cell 4   |</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features & Information -->
+        <section class="info-section">
+            <h2>Features</h2>
+            <div class="features-list">
+                <div class="feature">
+                    <h3>⚡ Real-time Preview</h3>
+                    <p>See your HTML rendered instantly as you type Markdown</p>
+                </div>
+                <div class="feature">
+                    <h3>📋 Copy Functionality</h3>
+                    <p>Easily copy Markdown or HTML code to your clipboard</p>
+                </div>
+                <div class="feature">
+                    <h3>💾 Download Options</h3>
+                    <p>Download your content as an HTML file with styling</p>
+                </div>
+                <div class="feature">
+                    <h3>🎨 Syntax Highlighting</h3>
+                    <p>Beautiful formatting for code blocks within Markdown</p>
+                </div>
+                <div class="feature">
+                    <h3>📱 Responsive Design</h3>
+                    <p>Works perfectly on desktop, tablet, and mobile devices</p>
+                </div>
+                <div class="feature">
+                    <h3>🔄 Live Updates</h3>
+                    <p>Changes are processed and displayed immediately</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HTML Output Section -->
+        <section class="output-section">
+            <h2>Generated HTML</h2>
+            <div class="html-output">
+                <div class="output-header">
+                    <h3>HTML Source Code</h3>
+                    <button id="copyGeneratedBtn" class="action-btn">📋 Copy</button>
+                </div>
+                <pre id="generatedHtml"><code></code></pre>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
