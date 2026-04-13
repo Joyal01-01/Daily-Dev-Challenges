@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debounce Function</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="debounce-demo">
+            <h1>Debounce Function Demo</h1>
+            
+            <div class="demo-section">
+                <h2>Search Example</h2>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Type to search..." 
+                    class="search-input"
+                >
+                <div id="searchResults" class="results"></div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">Total Calls (without debounce):</span>
+                    <span id="totalCalls" class="stat-value">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Debounced Calls:</span>
+                    <span id="debouncedCalls" class="stat-value">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Efficiency:</span>
+                    <span id="efficiency" class="stat-value">0%</span>
+                </div>
+            </div>
+
+            <div class="code-section">
+                <h2>How It Works</h2>
+                <pre><code>function debounce(func, delay) {
+    let timeoutId;
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}</code></pre>
+            </div>
+
+            <button onclick="resetStats()" class="btn-reset">Reset Stats</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
