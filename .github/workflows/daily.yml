@@ -12,7 +12,7 @@ jobs:
       issues: write
       contents: read
     steps:
-      - name: Generate Challenges
+      - name: Generate Dashboard Challenges
         uses: actions/github-script@v7
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -22,7 +22,9 @@ jobs:
             const allIssues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              state: "all"
+              state: "all",
+              labels: "nexus-dashboard-challenge",
+              per_page: 100
             });
 
             const challengeIssues = allIssues.data.filter(i => i.title.includes("Phase"));
@@ -30,45 +32,47 @@ jobs:
 
             const projectPhases = [
               {
-                title: "Project Setup & Clean Architecture",
-                task: "Initialize your React/Vite project. Set up Tailwind CSS and create the folder structure provided in the guide.",
-                details: "Focus on clean config files (.prettierrc, tailwind.config.js)."
+                title: "Foundation & Theme Engine",
+                task: "Setup Vite + Tailwind. Create a CSS variable-based theme engine (Midnight, Forest, and Sunset themes).",
+                details: "Focus on global layout using CSS Grid for the dashboard tiles."
               },
               {
-                title: "The Glassmorphic Navbar",
-                task: "Build a responsive navigation bar with a glassmorphism effect (backdrop-blur).",
-                details: "Ensure it has smooth hover states for links."
+                title: "Real-time Weather Widget",
+                task: "Integrate the OpenWeatherMap API (or similar). Fetch data based on user location.",
+                details: "Handle loading skeletons and API error states gracefully."
               },
               {
-                title: "Hero Section & GSAP Entry",
-                task: "Create a cinematic Hero section. Use GSAP to animate the text entering the screen.",
-                details: "Focus on typography and white space."
+                title: "The 'Flow' Pomodoro Timer",
+                task: "Build a circular progress timer with start/pause/reset functionality using `useEffect` and `setInterval`.",
+                details: "Add a subtle 'tick' sound or notification when the timer ends."
               },
               {
-                title: "Projects Grid (Data Mapping)",
-                task: "Create a JSON file with project data and map through it to display 'Project Cards'.",
-                details: "Practice clean component reusability."
+                title: "Smart Task Manager (CRUD)",
+                task: "Create a Task list with Priority levels (Low, Medium, High). Implement LocalStorage persistence.",
+                details: "Use `useReducer` for state management instead of simple `useState`."
               },
               {
-                title: "Custom Hook & Dark Mode",
-                task: "Implement a `useTheme` custom hook to toggle between Dark and Light modes.",
-                details: "Store the preference in localStorage."
+                title: "Interactive Analytics Card",
+                task: "Build a 'Productivity Stats' card using Framer Motion to animate progress bars for tasks completed.",
+                details: "Visualize data—how many tasks are high priority vs low."
               },
               {
-                title: "Contact Form & Form Validation",
-                task: "Build a functional UI for a contact form with real-time regex validation.",
-                details: "Handle 'Success' and 'Error' states visually."
+                title: "Custom Search & Quick Links",
+                task: "Build a command-palette style search bar (Ctrl+K style) to filter tasks or jump to external links.",
+                details: "Focus on keyboard accessibility (focus states and Esc to close)."
               },
               {
-                title: "Deployment & Final Polish",
-                task: "Optimize images, fix any responsive bugs, and deploy the site to Vercel or Netlify.",
-                details: "Add a 'Built by Me' footer."
+                title: "Performance Audit & PWA",
+                task: "Optimize for lighthouse scores (90+). Add a Manifest file to make it a Progressive Web App (PWA).",
+                details: "Final deployment and 'Offline Mode' verification."
               }
             ];
 
+            if (currentDay > 7 && context.eventName !== 'workflow_dispatch') return;
+            
             const phase = projectPhases[currentDay - 1];
 
-            // 1. Close Yesterday's Issues
+            // Close previous Nexus tasks
             const openIssues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -76,38 +80,38 @@ jobs:
             });
 
             for (const issue of openIssues.data) {
-              if (issue.title.includes(`Phase ${currentDay - 1}`)) {
+              if (issue.labels.some(l => l.name === 'nexus-dashboard-challenge')) {
                 await github.rest.issues.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: issue.number,
-                  state: "closed"
+                  state: "closed",
+                  labels: issue.labels.filter(l => l.name !== 'current-task').map(l => l.name)
                 });
               }
             }
 
-            // 2. Create the New Phase Issue
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🚀 Day ${currentDay}: Phase ${currentDay} - ${phase.title}`,
-              body: `## 🔴 WARNING: NO AI CHALLENGE\n` +
-                    `> **This project is for your growth. Using AI to generate the code defeats the purpose. Try to solve logic and CSS issues using documentation and MDN.**\n\n` +
+              title: `📅 Nexus Day ${currentDay}: Phase ${currentDay} - ${phase.title}`,
+              body: `## 🟢 PROJECT: NEXUS DASHBOARD\n` +
+                    `> **Level up your State Management and API integration skills.**\n\n` +
                     `### 🛠 Phase ${currentDay} Task\n` +
                     `**Objective:** ${phase.task}\n\n` +
                     `**Pro Tip:** ${phase.details}\n\n` +
-                    `### 📂 Recommended Folder Structure\n` +
+                    `### 📂 Dashboard Architecture\n` +
                     `\`\`\`text\n` +
                     `src/\n` +
-                    ` ├── assets/      # Images, Icons, SVGs\n` +
-                    ` ├── components/  # Reusable UI (Navbar, Button)\n` +
-                    ` ├── hooks/       # Custom React Hooks\n` +
-                    ` ├── sections/    # Page Sections (Hero, Contact)\n` +
-                    ` ├── styles/      # Global CSS\n` +
-                    ` └── App.jsx\n` +
+                    ` ├── api/         # Axios/Fetch instances\n` +
+                    ` ├── context/     # Theme & Auth Context\n` +
+                    ` ├── components/\n` +
+                    ` │    ├── widgets/ # Weather, Timer, Tasks\n` +
+                    ` │    └── common/  # Buttons, Inputs\n` +
+                    ` └── utils/       # Formatters, LocalStorage helpers\n` +
                     `\`\`\`\n\n` +
-                    `**Submission Folder:** \`projects/portfolio/day-${currentDay}/abhishekgoswami/\`\n` +
+                    `**Submission:** \`projects/nexus-dashboard/day-${currentDay}/abhishekgoswami/\`\n` +
                     `--- \n` +
-                    `🔥 **Goal:** Commit your progress daily to build your GitHub streak!`,
-              labels: ["7-day-challenge", `day-${currentDay}`]
+                    `⚡ **Don't use AI for logic.** Read the docs, solve the bug, get the dopamine!`,
+              labels: ["nexus-dashboard-challenge", `day-${currentDay}`, "current-task"]
             });
