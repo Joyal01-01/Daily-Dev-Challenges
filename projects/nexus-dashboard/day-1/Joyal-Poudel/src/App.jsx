@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import WeatherWidget from './components/WeatherWidget';
+
 function App() {
   const [theme, setTheme] = useState('dark');
 
@@ -54,8 +56,11 @@ function App() {
         </header>
 
         <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+          {/* Weather Widget */}
+          <WeatherWidget />
+          
           {/* Metric Cards placeholders */}
-          {[1, 2, 3].map(i => (
+          {[1, 2].map(i => (
              <div key={i} className="glass-panel" style={{ padding: '2rem' }}>
                <h3 style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Metric {i}</h3>
                <p style={{ fontSize: '2rem', fontWeight: 700, marginTop: '0.5rem' }}>{(Math.random() * 100).toFixed(1)}k</p>
