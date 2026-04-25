@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Briefcase, Settings, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, Briefcase, Settings, Sun, Moon, ExternalLink, Link, BookOpen, HelpCircle } from 'lucide-react';
 
 const Sidebar = ({ theme, toggleTheme }) => {
   return (
@@ -15,6 +15,22 @@ const Sidebar = ({ theme, toggleTheme }) => {
         <a href="#" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <Settings size={20} /> Settings
         </a>
+
+        <div className="quick-links-container">
+          <p className="quick-links-title">Quick Links</p>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="quick-link-item">
+            <Link size={18} /> GitHub Repository
+          </a>
+          <a href="#" className="quick-link-item">
+            <BookOpen size={18} /> Documentation
+          </a>
+          <a href="#" className="quick-link-item">
+            <ExternalLink size={18} /> Live Preview
+          </a>
+          <a href="#" className="quick-link-item">
+            <HelpCircle size={18} /> Support Center
+          </a>
+        </div>
       </nav>
       
       <button 
