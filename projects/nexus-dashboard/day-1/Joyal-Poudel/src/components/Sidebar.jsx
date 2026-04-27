@@ -1,7 +1,10 @@
 import React from 'react';
-import { LayoutDashboard, Briefcase, Settings, Sun, Moon, ExternalLink, Link, BookOpen, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, Briefcase, Settings, Sun, Moon, ExternalLink, Link, BookOpen, HelpCircle, Zap } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
-const Sidebar = ({ theme, toggleTheme }) => {
+const Sidebar = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <aside className="glass-panel sidebar">
       <h2 className="text-gradient" style={{ fontSize: '1.5rem', marginBottom: '2rem' }}>Nexus Engine</h2>
@@ -48,11 +51,14 @@ const Sidebar = ({ theme, toggleTheme }) => {
           gap: '0.75rem'
         }}
       >
-        {theme === 'dark' ? <><Sun size={20} /> Light Mode</> : <><Moon size={20} /> Dark Mode</>}
+        {theme === 'dark' ? <><Sun size={20} /> Light Mode</> : 
+         theme === 'light' ? <><Moon size={20} /> Midnight Mode</> :
+         theme === 'midnight' ? <><Zap size={20} /> Forest Mode</> :
+         <><Sun size={20} /> Dark Mode</>}
       </button>
     </aside>
   );
-};
+}
 
 
 

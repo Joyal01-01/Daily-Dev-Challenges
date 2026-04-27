@@ -9,7 +9,7 @@ const MetricCard = ({ label, value, trend }) => {
       <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem' }}>
         <p className="metric-value">{value}</p>
         {trend && (
-          <span style={{ color: trend.startsWith('+') ? '#22c55e' : '#ef4444', fontSize: '0.875rem', fontWeight: 600 }}>
+          <span style={{ color: trend.startsWith('+') ? 'var(--status-success)' : 'var(--status-danger)', fontSize: '0.875rem', fontWeight: 600 }}>
             {trend}
           </span>
         )}
