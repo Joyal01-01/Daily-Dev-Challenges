@@ -49,7 +49,7 @@ const PomodoroTimer = () => {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, minutes, seconds, isBreak]);
+  }, [isActive, minutes, seconds, isBreak, TOTAL_BREAK_TIME, TOTAL_WORK_TIME]);
 
   const toggleTimer = () => {
     setIsActive(!isActive);
