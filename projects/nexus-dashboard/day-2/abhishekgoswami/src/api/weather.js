@@ -1,79 +1,61 @@
 /**
- * Weather API wrapper using Fetch API
- * Integrates with OpenWeatherMap API for real-time weather data
+ * OpenWeatherMap API helpers
+ *
+ * Set your free API key in .env.local:
+ *   VITE_WEATHER_API_KEY=your_key_here
+ *
+ * Free tier: https://openweathermap.org/api
  */
 
-const API_KEY = import.meta.env.VITE_WEATHER_API_KEY || 'demo-key';
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
+const BASE = 'https://api.openweathermap.org/data/2.5'
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY ?? ''
 
 /**
- * Fetch weather data for a given location
- * @param {number} lat - Latitude
- * @param {number} lon - Longitude
- * @returns {Promise<Object>} Weather data object
+ * Fetch current weather by coordinates.
+ * @param {number} lat
+ * @param {number} lon
+ * @param {'metric'|'imperial'} units
+ * @returns {Promise<object>} OpenWeatherMap current weather response
  */
-export const fetchWeatherByCoords = async (lat, lon) => {
-  try {
-    const response = await fetch(
-      `${BASE_URL}/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
-    );
+export async function fetchWeatherByCoords(lat, lon, units = 'metric') {
+  if (!API_KEY) throw new Error('NO_API_KEY')
 
-    if (!response.ok) {
-      throw new Error(`Weather API Error: ${response.status}`);
-    }
+  const url = `${BASE}/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`
+  const res = await fetch(url)
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Weather fetch error:', error);
-    throw error;
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.message ?? `HTTP ${res.status}`)
   }
-};
+
+  return res.json()
+}
 
 /**
- * Fetch weather data by city name
- * @param {string} city - City name
- * @returns {Promise<Object>} Weather data object
+ * Fetch 5-day / 3-hour forecast by coordinates.
+ * @param {number} lat
+ * @param {number} lon
+ * @param {'metric'|'imperial'} units
+ * @returns {Promise<object>}
  */
-export const fetchWeatherByCity = async (city) => {
-  try {
-    const response = await fetch(
-      `${BASE_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`
-    );
+export async function fetchForecastByCoords(lat, lon, units = 'metric') {
+  if (!API_KEY) throw new Error('NO_API_KEY')
 
-    if (!response.ok) {
-      throw new Error(`Weather API Error: ${response.status}`);
-    }
+  const url = `${BASE}/forecast?lat=${lat}&lon=${lon}&units=${units}&cnt=8&appid=${API_KEY}`
+  const res = await fetch(url)
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Weather fetch error:', error);
-    throw error;
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.message ?? `HTTP ${res.status}`)
   }
-};
+
+  return res.json()
+}
 
 /**
- * Get user's geolocation
- * @returns {Promise<{lat: number, lon: number}>} Coordinates
+ * Get the OpenWeatherMap icon URL for a given icon code.
+ * @param {string} code  e.g. "01d"
+ * @param {'2x'|'4x'} size
  */
-export const getUserLocation = () => {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject(new Error('Geolocation not supported'));
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        resolve({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      },
-      (error) => {
-        reject(error);
-      }
-    );
-  });
-};
+export const weatherIconUrl = (code, size = '2x') =>
+  `https://openweathermap.org/img/wn/${code}@${size}.png`
