@@ -1,17 +1,52 @@
 @import "tailwindcss";
 
-:root {
-  --color-bg: #0d0d1a;
+:root,
+[data-theme="midnight"] {
+  --color-bg:      #0d0d1a;
   --color-surface: #16162a;
-  --color-border: rgba(255, 255, 255, 0.08);
+  --color-surface2:#1e1e38;
+  --color-border:  rgba(255, 255, 255, 0.08);
   --color-primary: #6c63ff;
-  --color-accent: #00d4ff;
-  --color-text: #e2e8f0;
-  --color-muted: #94a3b8;
+  --color-accent:  #00d4ff;
+  --color-text:    #e2e8f0;
+  --color-text-soft:#cbd5e1;
+  --color-muted:   #94a3b8;
   --color-success: #22c55e;
   --color-warning: #f59e0b;
-  --radius: 0.75rem;
-  --transition: 0.2s ease;
+  --radius:        0.75rem;
+  --transition:    0.2s ease;
+}
+
+[data-theme="forest"] {
+  --color-bg:      #0a1a0f;
+  --color-surface: #112218;
+  --color-surface2:#1a3326;
+  --color-border:  rgba(74, 222, 128, 0.12);
+  --color-primary: #22c55e;
+  --color-accent:  #86efac;
+  --color-text:    #dcfce7;
+  --color-text-soft:#bbf7d0;
+  --color-muted:   #6ee7b7;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --radius:        0.75rem;
+  --transition:    0.2s ease;
+}
+
+[data-theme="sunset"] {
+  --color-bg:      #1a0a00;
+  --color-surface: #2a1200;
+  --color-surface2:#3d1f00;
+  --color-border:  rgba(251, 146, 60, 0.15);
+  --color-primary: #f97316;
+  --color-accent:  #fbbf24;
+  --color-text:    #fff7ed;
+  --color-text-soft:#fed7aa;
+  --color-muted:   #fdba74;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --radius:        0.75rem;
+  --transition:    0.2s ease;
 }
 
 *,

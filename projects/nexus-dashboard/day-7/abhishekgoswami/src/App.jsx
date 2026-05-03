@@ -3,6 +3,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { usePWA } from './hooks/usePWA'
 import OfflineBanner from './components/common/OfflineBanner'
 import InstallPrompt from './components/common/InstallPrompt'
+import ThemeSwitcher from './components/common/ThemeSwitcher'
 
 // ── Lighthouse score data ─────────────────────────────────────────────────────
 const SCORES = [
@@ -39,20 +40,23 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
       {/* Header */}
-      <header className="border-b border-white/5 px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-white/5 px-6 py-4 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-lg font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] bg-clip-text text-transparent">
           Nexus Dashboard
         </h1>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
+          <ThemeSwitcher />
           {/* Online / offline indicator */}
-          <span
-            aria-label={isOnline ? 'Online' : 'Offline'}
-            title={isOnline ? 'Online' : 'Offline'}
-            className={`w-2.5 h-2.5 rounded-full ${isOnline ? 'bg-green-400' : 'bg-yellow-400'}`}
-          />
-          <span className="text-xs text-[var(--color-muted)]">
-            {isOnline ? 'Online' : 'Offline'}
-          </span>
+          <div className="flex items-center gap-2">
+            <span
+              aria-label={isOnline ? 'Online' : 'Offline'}
+              title={isOnline ? 'Online' : 'Offline'}
+              className={`w-2.5 h-2.5 rounded-full ${isOnline ? 'bg-green-400' : 'bg-yellow-400'}`}
+            />
+            <span className="text-xs text-[var(--color-muted)]">
+              {isOnline ? 'Online' : 'Offline'}
+            </span>
+          </div>
         </div>
       </header>
 
