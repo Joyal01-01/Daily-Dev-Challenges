@@ -1,6 +1,7 @@
 # Nexus Dashboard — Day 1: Phase 1 - Foundation & Theme Engine
 
 ## Submission by: Abhishek Goswami
+## Closes: #163 (also #150)
 
 ### What was done
 - **Vite + Tailwind CSS v4** project initialized
