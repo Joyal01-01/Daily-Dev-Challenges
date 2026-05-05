@@ -1,17 +1,12 @@
-# Nexus Dashboard: Phase 1 - Foundation & Theme Engine
+# Nexus Dashboard: Phase 2 - Real-time Weather Widget
 
 Welcome to the **Nexus Dashboard**, a premium, state-of-the-art productivity and analytics suite. This project is part of the Daily Dev Challenges, focused on creating high-performance, visually stunning web applications.
 
-## 🎯 Phase 1 Objectives
-The primary goal of Phase 1 was to establish a robust foundation for the application, focusing on:
-- **Vite + React Integration**: Setting up a modern, lightning-fast development environment.
-- **Advanced Theme Engine**: Implementing a CSS variable-based system supporting multiple premium themes:
-  - 🌌 **Midnight**: Deep blacks with neon cyan accents.
-  - 🌲 **Forest**: Organic green tones for a natural vibe.
-  - 🌅 **Sunset**: Warm orange and red hues for an energetic look.
-  - 🌑 **Dark (Default)**: Sleek indigo and violet tones.
-  - ☀️ **Light**: Clean, high-contrast professional look.
-- **Layout Foundation**: Designing a responsive, grid-based dashboard with glassmorphism effects and premium typography (Inter & Outfit).
+## 🎯 Phase 2 Objectives
+The primary focus of Phase 2 is real-time data integration:
+- **Weather API Integration**: Fetching live weather data using the Open-Meteo API.
+- **Dynamic Weather UI**: Displaying temperature, humidity, wind speed, and conditions with adaptive Lucide icons.
+- **Automatic Refresh**: Implementing an auto-refresh mechanism (every 10 minutes) to keep data current without page reloads.
 
 ## ✨ Features Implemented
 - **Dynamic Theme Switching**: Seamless transitions between 5 distinct themes using a unified CSS variable engine.
