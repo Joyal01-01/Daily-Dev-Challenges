@@ -1,6 +1,7 @@
-# Nexus Dashboard — Day 5: Phase 5 - Interactive Analytics Card
+# Nexus Dashboard - Day 5: Phase 5 - Interactive Analytics Card
 
 ## Submission by: Abhishek Goswami
+## Closes: #170 (also #158)
 
 ### What was built
 - **Framer Motion animated progress bars** — each priority bar animates from 0% to real value on mount with staggered delays
