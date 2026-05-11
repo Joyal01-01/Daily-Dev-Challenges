@@ -1,6 +1,9 @@
 # Nexus Dashboard — Day 6: Phase 6 - Custom Search & Quick Links
 
+# Nexus Dashboard - Day 6: Phase 6 - Custom Search and Quick Links
+
 ## Submission by: Abhishek Goswami
+## Closes: #172 (also #159, #144)
 
 ### What was done
 Built a **command-palette style search bar** (Ctrl+K) that lets users:

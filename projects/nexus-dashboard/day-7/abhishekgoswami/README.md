@@ -1,7 +1,7 @@
-# Nexus Dashboard — Day 7: Phase 7 - Performance Audit & PWA
+# Nexus Dashboard - Day 7: Phase 7 - Performance Audit and PWA
 
 ## Submission by: Abhishek Goswami
-## Closes: #161 (also #147)
+## Closes: #173 (also #161, #147)
 
 ### What was done
 - **Lighthouse 90+ scores** — Performance, Accessibility, Best Practices, SEO, PWA
