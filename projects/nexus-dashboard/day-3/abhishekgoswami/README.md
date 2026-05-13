@@ -1,7 +1,7 @@
 # Nexus Dashboard - Day 3: Phase 3 - The Flow Pomodoro Timer
 
 ## Submission by: Abhishek Goswami
-## Closes: #167 (also #155)
+## Closes: #177 (also #167, #155)
 
 ### What was built
 - **Circular SVG progress ring** — `strokeDashoffset` animates as time drains
