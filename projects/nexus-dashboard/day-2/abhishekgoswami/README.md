@@ -1,7 +1,7 @@
 # Nexus Dashboard — Day 2: Phase 2 - Real-time Weather Widget
 
 ## Submission by: Abhishek Goswami
-## Closes: #186 (also #166, #153)
+## Closes: #196 (also #186, #166, #153)
 
 ### What was done
 - **OpenWeatherMap API integration** — fetches current weather + 24-hour forecast by GPS coordinates
