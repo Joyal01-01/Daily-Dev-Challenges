@@ -1,6 +1,6 @@
 # Nexus Dashboard — Day 4: Phase 4 - Smart Task Manager (CRUD)
 
-## Closes: #188 (also #157)
+## Closes: #199 (also #188, #157)
 
 ### What was built
 - **Full CRUD** — Create, Read, Update (inline edit), Delete tasks
