@@ -1,117 +1,546 @@
-name: Daily Challenge System (7-Day Project Build)
-
+name: Multi-Stack Daily Challenge System
+ 
 on:
   schedule:
-    - cron: "0 3 * * *" # Runs every day at 3:00 AM
+    - cron: "0 3 * * *" # Every day at 3:00 AM UTC (8:45 AM Nepal Time)
   workflow_dispatch:
-
+    inputs:
+      force_stack:
+        description: "Force a specific stack (react/python/uiux/fastapi/cybersecurity/javascript/fullstack)"
+        required: false
+        default: ""
+      force_day:
+        description: "Force a specific day number (1-50)"
+        required: false
+        default: ""
+ 
 jobs:
-  daily-system:
+  post-daily-challenge:
     runs-on: ubuntu-latest
+ 
     permissions:
       issues: write
       contents: read
+ 
     steps:
-      - name: Generate Dashboard Challenges
+      - name: Post Daily Stack Challenge
         uses: actions/github-script@v7
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const allIssues = await github.rest.issues.listForRepo({
+ 
+            // ─────────────────────────────────────────────
+            //  CHALLENGE BANK — 50 challenges across 7 stacks
+            //  Rotation order keeps variety: no two same stacks back-to-back
+            // ─────────────────────────────────────────────
+ 
+            const challenges = {
+ 
+              react: [
+                {
+                  id: "react-1",
+                  title: "Responsive Navbar with Dark/Light Mode Toggle",
+                  level: "Beginner",
+                  task: "Build a fully responsive Navbar component using React. Include a hamburger menu for mobile and a dark/light mode toggle using `useState` + CSS variables.",
+                  tips: "Store theme preference in `localStorage` so it persists on refresh. Think in components: `<Navbar>`, `<NavLinks>`, `<ThemeToggle>`.",
+                  concepts: ["useState", "CSS Variables", "localStorage", "Responsive design"],
+                  folder: "react-challenges/navbar-dark-light",
+                  resources: "https://tailwindcss.com/docs/dark-mode"
+                },
+                {
+                  id: "react-2",
+                  title: "Pomodoro Timer with useEffect",
+                  level: "Intermediate",
+                  task: "Build a Pomodoro timer (25 min work / 5 min break). Use `useEffect` with `setInterval` for the countdown. Add start, pause, and reset controls with a session counter.",
+                  tips: "Clear the interval on component unmount to prevent memory leaks. Use `useReducer` for cleaner state management across timer states.",
+                  concepts: ["useEffect", "setInterval", "useReducer", "Cleanup functions"],
+                  folder: "react-challenges/pomodoro-timer",
+                  resources: "https://react.dev/reference/react/useEffect"
+                },
+                {
+                  id: "react-3",
+                  title: "GitHub Profile Finder",
+                  level: "Intermediate",
+                  task: "Build a GitHub Profile Finder using the GitHub REST API. Show avatar, bio, repo count, followers, and top 5 repos. Add loading skeletons and error handling for invalid usernames.",
+                  tips: "Use `async/await` inside `useEffect`. Create a custom `useFetch` hook to reuse the fetching logic cleanly.",
+                  concepts: ["Fetch API", "Custom hooks", "Loading states", "Error boundaries"],
+                  folder: "react-challenges/github-finder",
+                  resources: "https://docs.github.com/en/rest/users/users"
+                },
+                {
+                  id: "react-4",
+                  title: "Kanban Task Board",
+                  level: "Advanced",
+                  task: "Build a drag-and-drop Kanban board with three columns: To Do, In Progress, Done. Tasks should be movable between columns. Persist board state in `localStorage`.",
+                  tips: "Use the HTML5 Drag & Drop API natively before reaching for a library. Each task needs a unique ID — use `crypto.randomUUID()`. Use `useReducer` for the board state.",
+                  concepts: ["Drag & Drop API", "useReducer", "localStorage", "Component composition"],
+                  folder: "react-challenges/kanban-board",
+                  resources: "https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API"
+                },
+                {
+                  id: "react-5",
+                  title: "Real-time Weather Dashboard",
+                  level: "Intermediate",
+                  task: "Build a weather dashboard using OpenWeatherMap API. Show current weather, 5-day forecast, and a search bar for cities. Add unit toggle (°C / °F). Handle API errors and rate limits gracefully.",
+                  tips: "Debounce the search input using `setTimeout` + `useEffect` cleanup. Store your API key in a `.env` file — never hardcode it.",
+                  concepts: ["API integration", "Debouncing", "env variables", "Conditional rendering"],
+                  folder: "react-challenges/weather-dashboard",
+                  resources: "https://openweathermap.org/api/one-call-3"
+                },
+                {
+                  id: "react-6",
+                  title: "Multi-step Form with Validation",
+                  level: "Intermediate",
+                  task: "Build a 3-step registration form: (1) Personal Info, (2) Account Setup, (3) Review & Submit. Validate each step before allowing progression. Show a progress indicator and animate step transitions.",
+                  tips: "Keep all form data in a single state object at the parent level. Use a step index to control which panel renders. `react-hook-form` is optional but good to explore.",
+                  concepts: ["Controlled components", "Form validation", "State lifting", "Step navigation"],
+                  folder: "react-challenges/multi-step-form",
+                  resources: "https://react.dev/learn/sharing-state-between-components"
+                },
+                {
+                  id: "react-7",
+                  title: "Command Palette (Ctrl+K Search)",
+                  level: "Advanced",
+                  task: "Build a Spotlight/command palette that opens with Ctrl+K. It should search through a list of pages, actions, and links. Support keyboard navigation (↑↓ to move, Enter to select, Esc to close).",
+                  tips: "Use a `useEffect` to listen for the global keydown event. Use `useRef` for managing focus. Fuzzy search can be done with a simple filter on includes() before reaching for a library.",
+                  concepts: ["Global event listeners", "useRef", "Keyboard accessibility", "Fuzzy search"],
+                  folder: "react-challenges/command-palette",
+                  resources: "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+                }
+              ],
+ 
+              python: [
+                {
+                  id: "python-1",
+                  title: "Automated File Organizer",
+                  level: "Beginner",
+                  task: "Write a Python script that scans a folder and automatically organizes files into subfolders by extension: `/images`, `/documents`, `/videos`, `/others`. Log every action to a `.log` file.",
+                  tips: "Use `os` and `shutil` modules. Add a dry-run mode (`--dry-run` flag) that prints what would happen without moving anything. This is great for learning `argparse`.",
+                  concepts: ["os module", "shutil", "argparse", "File I/O", "Logging"],
+                  folder: "python-challenges/file-organizer",
+                  resources: "https://docs.python.org/3/library/shutil.html"
+                },
+                {
+                  id: "python-2",
+                  title: "Web Scraper with BeautifulSoup",
+                  level: "Intermediate",
+                  task: "Scrape a public website (e.g., quotes.toscrape.com) and extract all quotes, authors, and tags. Save the results to both a `.json` file and a `.csv` file. Handle pagination automatically.",
+                  tips: "Use `requests` + `BeautifulSoup4`. Respect robots.txt and add a small delay between requests with `time.sleep()`. Never scrape a site that forbids it.",
+                  concepts: ["requests", "BeautifulSoup4", "Pagination", "JSON/CSV export"],
+                  folder: "python-challenges/web-scraper",
+                  resources: "https://www.crummy.com/software/BeautifulSoup/bs4/doc/"
+                },
+                {
+                  id: "python-3",
+                  title: "CLI Password Manager",
+                  level: "Intermediate",
+                  task: "Build a command-line password manager. Features: add, get, list, and delete entries. Encrypt stored passwords using `cryptography` (Fernet). Store in a local encrypted JSON file.",
+                  tips: "Never store passwords in plaintext — even in a practice project. Derive the master key from a passphrase using `PBKDF2HMAC`. Use `getpass` for secure input.",
+                  concepts: ["Fernet encryption", "PBKDF2HMAC", "getpass", "JSON storage"],
+                  folder: "python-challenges/cli-password-manager",
+                  resources: "https://cryptography.io/en/latest/fernet/"
+                },
+                {
+                  id: "python-4",
+                  title: "Automation Bot: WhatsApp/Email Scheduler",
+                  level: "Intermediate",
+                  task: "Build a Python script that reads a CSV of recipients and messages, then sends scheduled emails using `smtplib` at specified times. Add an HTML email template option.",
+                  tips: "Use `schedule` library for the cron-like timing. Store email credentials in a `.env` file loaded via `python-dotenv`. Test with Mailtrap (a free fake SMTP service).",
+                  concepts: ["smtplib", "schedule", "python-dotenv", "HTML emails"],
+                  folder: "python-challenges/email-scheduler",
+                  resources: "https://mailtrap.io/blog/python-send-email/"
+                },
+                {
+                  id: "python-5",
+                  title: "Data Analysis with Pandas",
+                  level: "Intermediate",
+                  task: "Pick any public CSV dataset (e.g., from Kaggle). Load it with Pandas, clean missing values, group by key columns, and generate 3 meaningful visualizations using Matplotlib or Seaborn. Export a summary report.",
+                  tips: "Use `df.describe()` and `df.info()` first to understand your data. Document every cleaning decision — that habit matters in data engineering roles.",
+                  concepts: ["Pandas", "Data cleaning", "GroupBy", "Matplotlib", "Data storytelling"],
+                  folder: "python-challenges/data-analysis",
+                  resources: "https://pandas.pydata.org/docs/getting_started/intro_tutorials/"
+                }
+              ],
+ 
+              uiux: [
+                {
+                  id: "uiux-1",
+                  title: "Netflix-style Card UI",
+                  level: "Beginner",
+                  task: "Recreate the Netflix homepage card grid using only HTML and CSS — no JavaScript. Focus on hover effects (scale + overlay), consistent spacing using CSS Grid, and a dark color scheme.",
+                  tips: "Use CSS Grid with `repeat(auto-fill, minmax(180px, 1fr))` for the responsive grid. The overlay animation is pure CSS: `opacity: 0` to `opacity: 1` on hover using `transition`.",
+                  concepts: ["CSS Grid", "Hover effects", "Transitions", "Dark UI design"],
+                  folder: "uiux-challenges/netflix-card-ui",
+                  resources: "https://css-tricks.com/snippets/css/complete-guide-grid/"
+                },
+                {
+                  id: "uiux-2",
+                  title: "Portfolio Landing Page Design",
+                  level: "Beginner",
+                  task: "Design and build a personal portfolio landing page. Required sections: hero (name + tagline + CTA), about, skills, projects grid, and contact. Must be fully responsive and look polished on mobile.",
+                  tips: "Use an 8px spacing system consistently. Pick 2 fonts max: one for headings (e.g., Poppins), one for body (e.g., Inter). Test on actual mobile — DevTools simulation is not enough.",
+                  concepts: ["Typography scale", "8px grid", "Responsive design", "Visual hierarchy"],
+                  folder: "uiux-challenges/portfolio-landing",
+                  resources: "https://www.refactoringui.com/"
+                },
+                {
+                  id: "uiux-3",
+                  title: "Banking Dashboard UI",
+                  level: "Intermediate",
+                  task: "Design a banking/finance dashboard with: account balance card, recent transactions list, a spending chart (CSS only or Chart.js), and quick action buttons. Both light and dark mode.",
+                  tips: "Finance UIs demand clarity above everything. Use color purposefully: green = income, red = expense, never just for decoration. Maintain WCAG AA contrast ratios.",
+                  concepts: ["Data visualization", "Accessibility", "Color semantics", "Card layouts"],
+                  folder: "uiux-challenges/banking-dashboard",
+                  resources: "https://www.w3.org/WAI/WCAG21/quickref/"
+                },
+                {
+                  id: "uiux-4",
+                  title: "Mobile App UI — Habit Tracker",
+                  level: "Intermediate",
+                  task: "Design a mobile-first habit tracker UI (375px width). Include: a daily checklist, a weekly streak calendar, a progress ring for each habit, and a bottom navigation bar.",
+                  tips: "Minimum tap target size is 44×44px — this is accessibility, not preference. Use CSS `aspect-ratio` for the progress rings. Design for thumb zones on mobile.",
+                  concepts: ["Mobile-first", "Touch targets", "Progress indicators", "Bottom nav pattern"],
+                  folder: "uiux-challenges/habit-tracker-ui",
+                  resources: "https://web.dev/mobile-touchscreen/"
+                },
+                {
+                  id: "uiux-5",
+                  title: "Design System — Component Library",
+                  level: "Advanced",
+                  task: "Build a mini design system: define a color palette (primary, secondary, semantic), typography scale (6 sizes), spacing scale, and build 5 components: Button (3 variants), Input, Card, Badge, and Alert.",
+                  tips: "Use CSS custom properties (variables) as your design tokens — this is how real design systems work. Document each component with usage examples. This becomes a reusable starter for all future projects.",
+                  concepts: ["Design tokens", "CSS variables", "Component API", "Documentation"],
+                  folder: "uiux-challenges/design-system",
+                  resources: "https://bradfrost.com/blog/post/atomic-web-design/"
+                }
+              ],
+ 
+              fastapi: [
+                {
+                  id: "fastapi-1",
+                  title: "Todo CRUD API with Validation",
+                  level: "Beginner",
+                  task: "Build a full CRUD API for a Todo app using FastAPI. Endpoints: GET /todos, GET /todos/{id}, POST /todos, PUT /todos/{id}, DELETE /todos/{id}. Use Pydantic models for request/response validation.",
+                  tips: "Use an in-memory list for storage first — get the API design right before adding a database. Test every endpoint in the auto-generated Swagger UI at `/docs`.",
+                  concepts: ["FastAPI routing", "Pydantic models", "HTTP methods", "Status codes"],
+                  folder: "fastapi-challenges/todo-api",
+                  resources: "https://fastapi.tiangolo.com/tutorial/first-steps/"
+                },
+                {
+                  id: "fastapi-2",
+                  title: "JWT Authentication System",
+                  level: "Intermediate",
+                  task: "Add JWT-based authentication to a FastAPI app. Implement: POST /register, POST /login (returns access token), and a protected GET /me endpoint. Hash passwords with bcrypt.",
+                  tips: "Use `python-jose` for JWT and `passlib[bcrypt]` for password hashing. Never store raw passwords. Use `OAuth2PasswordBearer` for the auth scheme — FastAPI has built-in support.",
+                  concepts: ["JWT tokens", "bcrypt hashing", "OAuth2PasswordBearer", "Protected routes"],
+                  folder: "fastapi-challenges/jwt-auth",
+                  resources: "https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/"
+                },
+                {
+                  id: "fastapi-3",
+                  title: "File Upload & Processing API",
+                  level: "Intermediate",
+                  task: "Build an API that accepts image uploads, resizes them to 3 sizes (thumbnail, medium, large) using Pillow, and returns the processed file URLs. Add file type validation and size limits.",
+                  tips: "Use `UploadFile` from FastAPI. Process images asynchronously with `BackgroundTasks`. Store processed images in a local `uploads/` folder organized by date.",
+                  concepts: ["UploadFile", "Pillow", "BackgroundTasks", "File validation"],
+                  folder: "fastapi-challenges/file-upload-api",
+                  resources: "https://fastapi.tiangolo.com/tutorial/request-files/"
+                },
+                {
+                  id: "fastapi-4",
+                  title: "Real-time Chat with WebSockets",
+                  level: "Advanced",
+                  task: "Build a real-time chat room using FastAPI WebSockets. Support multiple rooms, broadcast messages to all clients in a room, and show a user joined/left notification. Build a minimal HTML frontend to test it.",
+                  tips: "Use a `ConnectionManager` class to manage active WebSocket connections per room. Test with multiple browser tabs. This is how real-time features work in production backends.",
+                  concepts: ["WebSockets", "ConnectionManager", "Broadcast", "Real-time systems"],
+                  folder: "fastapi-challenges/websocket-chat",
+                  resources: "https://fastapi.tiangolo.com/advanced/websockets/"
+                },
+                {
+                  id: "fastapi-5",
+                  title: "REST API with PostgreSQL + SQLAlchemy",
+                  level: "Advanced",
+                  task: "Build a Blog API with users and posts. Use PostgreSQL + SQLAlchemy ORM + Alembic for migrations. Endpoints: CRUD for posts, nested author info in responses, pagination, and search by title.",
+                  tips: "Use `asyncpg` for async database connections. Always add database indexes on columns you filter/sort by. Alembic migrations are non-negotiable — never manually alter a production DB.",
+                  concepts: ["SQLAlchemy ORM", "Alembic migrations", "Async DB", "Pagination"],
+                  folder: "fastapi-challenges/blog-api-postgres",
+                  resources: "https://sqlalchemy.org/docs/"
+                }
+              ],
+ 
+              cybersecurity: [
+                {
+                  id: "cyber-1",
+                  title: "Network Packet Sniffer with Scapy",
+                  level: "Beginner",
+                  task: "Use Scapy to capture live packets on your network interface. Display: source IP, destination IP, protocol (TCP/UDP/ICMP), and payload size. Save captures to a `.pcap` file viewable in Wireshark.",
+                  tips: "Run with root/admin privileges. Use `sniff(filter='tcp', count=20)` to limit captures during testing. This is how real network monitoring tools work — understand the ethics before using on any network you don't own.",
+                  concepts: ["Scapy", "TCP/IP layers", "Packet filtering", "PCAP format"],
+                  folder: "cybersecurity/packet-sniffer",
+                  resources: "https://scapy.readthedocs.io/en/latest/usage.html"
+                },
+                {
+                  id: "cyber-2",
+                  title: "Port Scanner",
+                  level: "Beginner",
+                  task: "Build a multi-threaded port scanner in Python. Scan a given IP/hostname for open ports in a specified range. Display service names for common ports and export results to a report.",
+                  tips: "Use `socket` + `threading` for speed. Add a timeout (e.g., 0.5s per port) or scanning 65535 ports will take forever. Only scan systems you own or have explicit permission to scan.",
+                  concepts: ["socket module", "threading", "TCP handshake", "Service enumeration"],
+                  folder: "cybersecurity/port-scanner",
+                  resources: "https://docs.python.org/3/library/socket.html"
+                },
+                {
+                  id: "cyber-3",
+                  title: "Bash System Monitoring Tool",
+                  level: "Intermediate",
+                  task: "Write a Bash script that monitors system health: CPU usage, RAM usage, disk space, and active network connections. Alert (color-coded output) when any metric exceeds a threshold. Run as a cron job every 5 minutes.",
+                  tips: "Use `top`, `free`, `df`, and `netstat` commands. Format output with ANSI color codes: red for danger, yellow for warning, green for healthy. Log results to `/var/log/sysmonitor.log`.",
+                  concepts: ["Bash scripting", "System commands", "Cron jobs", "ANSI colors"],
+                  folder: "cybersecurity/bash-system-monitor",
+                  resources: "https://tldp.org/LDP/Bash-Beginners-Guide/html/"
+                },
+                {
+                  id: "cyber-4",
+                  title: "Password Strength Analyzer",
+                  level: "Beginner",
+                  task: "Build a tool that analyzes password strength based on: length, uppercase/lowercase mix, numbers, special characters, and checks against a list of 10,000 common passwords. Return a score and improvement suggestions.",
+                  tips: "Download the `rockyou.txt` (truncated) or `SecLists` common passwords list. Use `zxcvbn` library for real-world strength estimation. This is actually used in production auth systems.",
+                  concepts: ["String analysis", "Security heuristics", "zxcvbn", "Common password lists"],
+                  folder: "cybersecurity/password-analyzer",
+                  resources: "https://github.com/dwolfhub/zxcvbn-python"
+                },
+                {
+                  id: "cyber-5",
+                  title: "Log File Analyzer for Intrusion Detection",
+                  level: "Intermediate",
+                  task: "Parse a server access log file (Apache/Nginx format). Detect suspicious patterns: brute-force attempts (10+ 401s from same IP), SQL injection patterns in URLs, and unusual traffic spikes. Generate an HTML report.",
+                  tips: "Use Python regex for log parsing. Group by IP with `collections.Counter`. This is basic SIEM (Security Information and Event Management) work — a real career skill.",
+                  concepts: ["Log parsing", "Regex", "Pattern detection", "Report generation"],
+                  folder: "cybersecurity/log-analyzer",
+                  resources: "https://docs.python.org/3/library/re.html"
+                }
+              ],
+ 
+              javascript: [
+                {
+                  id: "js-1",
+                  title: "Vanilla JS Todo App with LocalStorage",
+                  level: "Beginner",
+                  task: "Build a todo app using only vanilla JavaScript — no frameworks. Features: add, delete, mark complete, filter by status (all/active/completed), and persist using `localStorage`.",
+                  tips: "Use `JSON.parse/stringify` for localStorage. Practice DOM manipulation with `createElement`, `appendChild`, and event delegation on the list container instead of individual items.",
+                  concepts: ["DOM manipulation", "localStorage", "Event delegation", "JSON"],
+                  folder: "javascript-challenges/vanilla-todo",
+                  resources: "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model"
+                },
+                {
+                  id: "js-2",
+                  title: "Infinite Scroll with Fetch API",
+                  level: "Intermediate",
+                  task: "Build an infinite scroll image gallery using the Unsplash API (free). Load 12 images initially. Detect when the user reaches the bottom using `IntersectionObserver` and fetch the next page automatically.",
+                  tips: "Use `IntersectionObserver` — it's far more performant than the old `scroll` event listener approach. Add a loading spinner while fetching. Store your API key in a config object, not hardcoded.",
+                  concepts: ["Fetch API", "IntersectionObserver", "Pagination", "Loading states"],
+                  folder: "javascript-challenges/infinite-scroll",
+                  resources: "https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API"
+                },
+                {
+                  id: "js-3",
+                  title: "Real-time Search Filter",
+                  level: "Beginner",
+                  task: "Build a searchable, filterable list of 50+ items (use a JSON file of countries or movies). As the user types, filter the list in real time. Highlight the matched text in results. Add filter chips for categories.",
+                  tips: "Debounce the input with `setTimeout` to avoid filtering on every single keystroke. To highlight matches, use `String.replace()` with a regex and wrap matches in a `<mark>` tag.",
+                  concepts: ["Debouncing", "Array filter/map", "Regex highlighting", "Filter chips"],
+                  folder: "javascript-challenges/realtime-search",
+                  resources: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter"
+                }
+              ],
+ 
+              fullstack: [
+                {
+                  id: "fs-1",
+                  title: "Full-stack Note App (React + FastAPI)",
+                  level: "Intermediate",
+                  task: "Build a full-stack note-taking app. Backend: FastAPI with SQLite + SQLAlchemy (CRUD for notes). Frontend: React with forms to create/edit notes and a list view. Connect via Fetch API. Deploy backend to Render (free).",
+                  tips: "Handle CORS in FastAPI with `CORSMiddleware`. Use React Router for `/notes` and `/notes/:id`. This is the most important project architecture to understand — frontend talking to your own backend.",
+                  concepts: ["FastAPI + React", "CORS", "SQLite", "Full-stack architecture"],
+                  folder: "fullstack-projects/notes-app",
+                  resources: "https://fastapi.tiangolo.com/tutorial/cors/"
+                },
+                {
+                  id: "fs-2",
+                  title: "URL Shortener (React + FastAPI + Redis)",
+                  level: "Advanced",
+                  task: "Build a URL shortener like Bitly. Backend: FastAPI generates a short code, stores original→short mapping in Redis (or SQLite). Frontend: React form to submit URLs, show short link, copy-to-clipboard button, and click count analytics.",
+                  tips: "Short codes can be generated with `secrets.token_urlsafe(6)`. Redis is ideal for this (O(1) lookup) but SQLite works fine for learning. Track clicks by incrementing a counter on each redirect.",
+                  concepts: ["URL shortening logic", "Redis/SQLite", "Click tracking", "Copy to clipboard"],
+                  folder: "fullstack-projects/url-shortener",
+                  resources: "https://redis.io/docs/get-started/"
+                },
+                {
+                  id: "fs-3",
+                  title: "Authentication System (JWT + React)",
+                  level: "Advanced",
+                  task: "Build a complete auth system: Register, Login, protected Dashboard route, and Logout. Backend: FastAPI + JWT + bcrypt. Frontend: React with protected routes using React Router. Store token in httpOnly cookie (not localStorage).",
+                  tips: "httpOnly cookies are safer than localStorage for tokens — they're inaccessible to JavaScript and thus immune to XSS attacks. Use `axios` with `withCredentials: true`. Add token refresh logic.",
+                  concepts: ["JWT", "httpOnly cookies", "Protected routes", "Token refresh"],
+                  folder: "fullstack-projects/auth-system",
+                  resources: "https://owasp.org/www-community/HttpOnly"
+                }
+              ]
+            };
+ 
+            // ─────────────────────────────────────────────
+            //  ROTATION SCHEDULE
+            //  7-day cycle so each week is unique
+            //  Every member gets their stack at least once per week
+            // ─────────────────────────────────────────────
+ 
+            const rotationSchedule = [
+              "react",
+              "python",
+              "uiux",
+              "fastapi",
+              "cybersecurity",
+              "javascript",
+              "fullstack"
+            ];
+ 
+            // ─────────────────────────────────────────────
+            //  STACK METADATA (labels, colors, emoji)
+            // ─────────────────────────────────────────────
+ 
+            const stackMeta = {
+              react:         { emoji: "⚛️",  color: "0075CA", label: "stack-react" },
+              python:        { emoji: "🐍",  color: "3572A5", label: "stack-python" },
+              uiux:          { emoji: "🎨",  color: "E4405F", label: "stack-uiux" },
+              fastapi:       { emoji: "⚡",  color: "009688", label: "stack-fastapi" },
+              cybersecurity: { emoji: "🔐",  color: "D93025", label: "stack-cybersecurity" },
+              javascript:    { emoji: "🟨",  color: "F7DF1E", label: "stack-javascript" },
+              fullstack:     { emoji: "🚀",  color: "6E40C9", label: "stack-fullstack" }
+            };
+ 
+            // ─────────────────────────────────────────────
+            //  DETERMINE TODAY'S STACK + CHALLENGE
+            // ─────────────────────────────────────────────
+ 
+            // Count all previously posted daily challenges
+            const allChallengeIssues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: "all",
-              labels: "nexus-dashboard-challenge",
+              labels: "daily-challenge",
               per_page: 100
             });
-
-            const challengeIssues = allIssues.data.filter(i => i.title.includes("Phase"));
-            const currentDay = (challengeIssues.length % 7) + 1;
-
-            const projectPhases = [
-              {
-                title: "Foundation & Theme Engine",
-                task: "Setup Vite + Tailwind. Create a CSS variable-based theme engine (Midnight, Forest, and Sunset themes).",
-                details: "Focus on global layout using CSS Grid for the dashboard tiles."
-              },
-              {
-                title: "Real-time Weather Widget",
-                task: "Integrate the OpenWeatherMap API (or similar). Fetch data based on user location.",
-                details: "Handle loading skeletons and API error states gracefully."
-              },
-              {
-                title: "The 'Flow' Pomodoro Timer",
-                task: "Build a circular progress timer with start/pause/reset functionality using `useEffect` and `setInterval`.",
-                details: "Add a subtle 'tick' sound or notification when the timer ends."
-              },
-              {
-                title: "Smart Task Manager (CRUD)",
-                task: "Create a Task list with Priority levels (Low, Medium, High). Implement LocalStorage persistence.",
-                details: "Use `useReducer` for state management instead of simple `useState`."
-              },
-              {
-                title: "Interactive Analytics Card",
-                task: "Build a 'Productivity Stats' card using Framer Motion to animate progress bars for tasks completed.",
-                details: "Visualize data—how many tasks are high priority vs low."
-              },
-              {
-                title: "Custom Search & Quick Links",
-                task: "Build a command-palette style search bar (Ctrl+K style) to filter tasks or jump to external links.",
-                details: "Focus on keyboard accessibility (focus states and Esc to close)."
-              },
-              {
-                title: "Performance Audit & PWA",
-                task: "Optimize for lighthouse scores (90+). Add a Manifest file to make it a Progressive Web App (PWA).",
-                details: "Final deployment and 'Offline Mode' verification."
-              }
-            ];
-
-            if (currentDay > 7 && context.eventName !== 'workflow_dispatch') return;
-            
-            const phase = projectPhases[currentDay - 1];
-
-            // Close previous Nexus tasks
+ 
+            let globalDay = allChallengeIssues.data.length;
+ 
+            // Allow manual override via workflow_dispatch inputs
+            const forceStack = context.payload.inputs?.force_stack || "";
+            const forceDay   = parseInt(context.payload.inputs?.force_day  || "0");
+ 
+            let stackName, challenge;
+ 
+            if (forceStack && challenges[forceStack]) {
+              stackName = forceStack;
+              const stackChallenges = challenges[stackName];
+              const idx = forceDay ? (forceDay - 1) % stackChallenges.length : (globalDay % stackChallenges.length);
+              challenge = stackChallenges[idx];
+            } else {
+              // Normal rotation: pick stack by day index
+              stackName = rotationSchedule[globalDay % rotationSchedule.length];
+              const stackChallenges = challenges[stackName];
+              // Cycle through all challenges in each stack before repeating
+              const stackIssues = allChallengeIssues.data.filter(i =>
+                i.labels.some(l => l.name === stackMeta[stackName].label)
+              );
+              challenge = stackChallenges[stackIssues.length % stackChallenges.length];
+            }
+ 
+            const meta    = stackMeta[stackName];
+            const dayNum  = globalDay + 1;
+ 
+            // ─────────────────────────────────────────────
+            //  CLOSE ALL CURRENTLY OPEN DAILY CHALLENGES
+            // ─────────────────────────────────────────────
+ 
             const openIssues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              state: "open"
+              state: "open",
+              labels: "daily-challenge",
+              per_page: 50
             });
-
+ 
             for (const issue of openIssues.data) {
-              if (issue.labels.some(l => l.name === 'nexus-dashboard-challenge')) {
-                await github.rest.issues.update({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: issue.number,
-                  state: "closed",
-                  labels: issue.labels.filter(l => l.name !== 'current-task').map(l => l.name)
-                });
-              }
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: "closed"
+              });
             }
-
+ 
+            // ─────────────────────────────────────────────
+            //  BUILD ISSUE BODY
+            // ─────────────────────────────────────────────
+ 
+            const conceptBadges = challenge.concepts.map(c => `\`${c}\``).join(" · ");
+            const weekNum = Math.ceil(dayNum / 7);
+            const dayInWeek = ((dayNum - 1) % 7) + 1;
+ 
+            const body =
+              `# ${meta.emoji} Community Daily Challenge — Day ${dayNum}\n\n` +
+ 
+              `> **Week ${weekNum}, Day ${dayInWeek}** | Stack: **${stackName.charAt(0).toUpperCase() + stackName.slice(1)}** | Level: **${challenge.level}**\n\n` +
+ 
+              `---\n\n` +
+ 
+              `## 🛠 Today's Task\n\n` +
+              `${challenge.task}\n\n` +
+ 
+              `## 💡 Pro Tips\n\n` +
+              `${challenge.tips}\n\n` +
+ 
+              `## 🧠 Concepts You'll Practice\n\n` +
+              `${conceptBadges}\n\n` +
+ 
+              `## 📂 Submission Folder\n\n` +
+              `\`\`\`\n` +
+              `${challenge.folder}/your-github-username/\n` +
+              `\`\`\`\n\n` +
+ 
+              `## ✅ Submission Checklist\n\n` +
+              `- [ ] Fork the repository\n` +
+              `- [ ] Create your folder: \`${challenge.folder}/your-github-username/\`\n` +
+              `- [ ] Add a \`README.md\` with a short description and screenshot\n` +
+              `- [ ] Use clean, meaningful commit messages\n` +
+              `- [ ] Open a Pull Request with title: \`[${stackName.toUpperCase()}] ${challenge.title} — @yourusername\`\n` +
+              `- [ ] Comment below with your PR link once submitted 👇\n\n` +
+ 
+              `## 📚 Helpful Resource\n\n` +
+              `${challenge.resources}\n\n` +
+ 
+              `---\n\n` +
+              `> 💬 **Stuck?** Comment your specific blocker below — no vague "it's not working". Share your code, your error, and what you've tried.\n` +
+              `> \n` +
+              `> 🔥 **Don't use AI to write the logic for you.** Read the docs, break the problem into steps, and earn the understanding. That's what builds real skills.\n` +
+              `> \n` +
+              `> 👀 **All stacks are welcome to try any challenge** — cross-stack learning is encouraged!`;
+ 
+            // ─────────────────────────────────────────────
+            //  CREATE THE NEW ISSUE
+            // ─────────────────────────────────────────────
+ 
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `📅 Nexus Day ${currentDay}: Phase ${currentDay} - ${phase.title}`,
-              body: `## 🟢 PROJECT: NEXUS DASHBOARD\n` +
-                    `> **Level up your State Management and API integration skills.**\n\n` +
-                    `### 🛠 Phase ${currentDay} Task\n` +
-                    `**Objective:** ${phase.task}\n\n` +
-                    `**Pro Tip:** ${phase.details}\n\n` +
-                    `### 📂 Dashboard Architecture\n` +
-                    `\`\`\`text\n` +
-                    `src/\n` +
-                    ` ├── api/         # Axios/Fetch instances\n` +
-                    ` ├── context/     # Theme & Auth Context\n` +
-                    ` ├── components/\n` +
-                    ` │    ├── widgets/ # Weather, Timer, Tasks\n` +
-                    ` │    └── common/  # Buttons, Inputs\n` +
-                    ` └── utils/       # Formatters, LocalStorage helpers\n` +
-                    `\`\`\`\n\n` +
-                    `**Submission:** \`projects/nexus-dashboard/day-${currentDay}/abhishekgoswami/\`\n` +
-                    `--- \n` +
-                    `⚡ **Don't use AI for logic.** Read the docs, solve the bug, get the dopamine!`,
-              labels: ["nexus-dashboard-challenge", `day-${currentDay}`, "current-task"]
+              title: `${meta.emoji} Day ${dayNum}: ${challenge.title} [${stackName.toUpperCase()}]`,
+              body: body,
+              labels: [
+                "daily-challenge",
+                meta.label,
+                challenge.level.toLowerCase(),
+                `week-${weekNum}`
+              ]
             });
