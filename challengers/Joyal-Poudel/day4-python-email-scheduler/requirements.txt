@@ -1,0 +1,2 @@
+schedule==1.2.0
+python-cron==0.6.1

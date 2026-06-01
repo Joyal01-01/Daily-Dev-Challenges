@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🔐 Password Strength Analyzer</h1>
+            <p class="subtitle">Create a secure password</p>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="password-input-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Enter your password" 
+                        class="password-input"
+                        autocomplete="off"
+                    >
+                    <button id="toggleBtn" class="toggle-btn">👁️</button>
+                </div>
+            </div>
+
+            <div class="strength-meter">
+                <div class="strength-bar-bg">
+                    <div id="strengthBar" class="strength-bar"></div>
+                </div>
+                <div class="strength-text">
+                    Strength: <span id="strengthLabel">-</span>
+                </div>
+            </div>
+
+            <div class="requirements">
+                <h3>Requirements</h3>
+                <div class="requirement-list">
+                    <div class="requirement" id="req-length">
+                        <span class="icon">✓</span>
+                        <span class="text">At least 8 characters</span>
+                    </div>
+                    <div class="requirement" id="req-uppercase">
+                        <span class="icon">✓</span>
+                        <span class="text">At least one uppercase letter (A-Z)</span>
+                    </div>
+                    <div class="requirement" id="req-lowercase">
+                        <span class="icon">✓</span>
+                        <span class="text">At least one lowercase letter (a-z)</span>
+                    </div>
+                    <div class="requirement" id="req-number">
+                        <span class="icon">✓</span>
+                        <span class="text">At least one number (0-9)</span>
+                    </div>
+                    <div class="requirement" id="req-special">
+                        <span class="icon">✓</span>
+                        <span class="text">At least one special character (!@#$%^&*)</span>
+                    </div>
+                    <div class="requirement" id="req-no-common">
+                        <span class="icon">✓</span>
+                        <span class="text">Not a common password</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="password-info">
+                <p><strong>Length:</strong> <span id="lengthInfo">0</span> characters</p>
+                <p><strong>Score:</strong> <span id="scoreInfo">0</span> / 100</p>
+                <p><strong>Entropy:</strong> <span id="entropyInfo">0</span> bits</p>
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="action-buttons">
+                <button id="generateBtn" class="generate-btn">Generate Secure Password</button>
+                <button id="copyBtn" class="copy-btn" style="display: none;">Copy Password</button>
+            </div>
+
+            <div id="generated-password" class="generated-password" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

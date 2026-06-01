@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Design System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ds-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Design System</h2>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-section="overview">🎨 Overview</button>
+                <button class="nav-item" data-section="colors">🎭 Colors</button>
+                <button class="nav-item" data-section="typography">📝 Typography</button>
+                <button class="nav-item" data-section="buttons">🔘 Buttons</button>
+                <button class="nav-item" data-section="forms">📋 Forms</button>
+                <button class="nav-item" data-section="cards">🃏 Cards</button>
+                <button class="nav-item" data-section="alerts">⚠️ Alerts</button>
+                <button class="nav-item" data-section="spacing">📏 Spacing</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="section active">
+                <h1>Welcome to the Design System</h1>
+                <p>A comprehensive guide to design patterns, components, and best practices.</p>
+                <div class="grid-2">
+                    <div class="info-box">
+                        <h3>🎯 Purpose</h3>
+                        <p>Maintain consistency across all digital products through reusable components and guidelines.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>📚 Documentation</h3>
+                        <p>Explore individual sections to learn about colors, components, and usage patterns.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>🚀 Benefits</h3>
+                        <p>Speed up development, improve user experience, and ensure brand consistency.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>✨ Components</h3>
+                        <p>Pre-built, accessible, and tested components ready for implementation.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Colors Section -->
+            <section id="colors" class="section">
+                <h1>Color Palette</h1>
+                <div class="grid-3">
+                    <div class="color-swatch">
+                        <div class="color" style="background: #667eea;"></div>
+                        <p><strong>Primary</strong></p>
+                        <p>#667eea</p>
+                        <p>RGB(102, 126, 234)</p>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color" style="background: #764ba2;"></div>
+                        <p><strong>Secondary</strong></p>
+                        <p>#764ba2</p>
+                        <p>RGB(118, 75, 162)</p>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color" style="background: #4caf50;"></div>
+                        <p><strong>Success</strong></p>
+                        <p>#4caf50</p>
+                        <p>RGB(76, 175, 80)</p>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color" style="background: #ff9800;"></div>
+                        <p><strong>Warning</strong></p>
+                        <p>#ff9800</p>
+                        <p>RGB(255, 152, 0)</p>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color" style="background: #f44336;"></div>
+                        <p><strong>Error</strong></p>
+                        <p>#f44336</p>
+                        <p>RGB(244, 67, 54)</p>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color" style="background: #2196f3;"></div>
+                        <p><strong>Info</strong></p>
+                        <p>#2196f3</p>
+                        <p>RGB(33, 150, 243)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Typography Section -->
+            <section id="typography" class="section">
+                <h1>Typography</h1>
+                <h2>Font Family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif</h2>
+                
+                <h3>Heading Sizes</h3>
+                <div class="typography-samples">
+                    <div>
+                        <h1>Heading 1 (32px)</h1>
+                        <p class="label">font-size: 2em; font-weight: 600;</p>
+                    </div>
+                    <div>
+                        <h2>Heading 2 (28px)</h2>
+                        <p class="label">font-size: 1.75em; font-weight: 600;</p>
+                    </div>
+                    <div>
+                        <h3>Heading 3 (24px)</h3>
+                        <p class="label">font-size: 1.5em; font-weight: 600;</p>
+                    </div>
+                    <div>
+                        <h4>Heading 4 (20px)</h4>
+                        <p class="label">font-size: 1.25em; font-weight: 600;</p>
+                    </div>
+                    <div>
+                        <p><strong>Body Text</strong> (16px)</p>
+                        <p class="label">font-size: 1em; line-height: 1.6;</p>
+                    </div>
+                    <div>
+                        <p><small>Small Text (14px)</small></p>
+                        <p class="label">font-size: 0.875em;</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Buttons Section -->
+            <section id="buttons" class="section">
+                <h1>Buttons</h1>
+                <h3>Button Styles</h3>
+                <div class="component-demo">
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-secondary">Secondary Button</button>
+                    <button class="btn btn-success">Success Button</button>
+                    <button class="btn btn-warning">Warning Button</button>
+                    <button class="btn btn-error">Error Button</button>
+                </div>
+
+                <h3>Button Sizes</h3>
+                <div class="component-demo">
+                    <button class="btn btn-primary btn-small">Small</button>
+                    <button class="btn btn-primary btn-medium">Medium</button>
+                    <button class="btn btn-primary btn-large">Large</button>
+                </div>
+
+                <h3>Button States</h3>
+                <div class="component-demo">
+                    <button class="btn btn-primary">Enabled</button>
+                    <button class="btn btn-primary" disabled>Disabled</button>
+                    <button class="btn btn-primary btn-loading">Loading...</button>
+                </div>
+            </section>
+
+            <!-- Forms Section -->
+            <section id="forms" class="section">
+                <h1>Form Elements</h1>
+                <form class="form-demo">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="John Doe" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="john@example.com" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="4" placeholder="Your message here..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select">Select Option</label>
+                        <select id="select">
+                            <option>Choose an option</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" /> Remember me
+                        </label>
+                        <label>
+                            <input type="checkbox" /> Subscribe to updates
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </section>
+
+            <!-- Cards Section -->
+            <section id="cards" class="section">
+                <h1>Cards</h1>
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-header">Card Title</div>
+                        <div class="card-body">
+                            <p>This is a simple card component with basic styling and layout.</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-small btn-primary">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="card card-highlighted">
+                        <div class="card-header">Featured Card</div>
+                        <div class="card-body">
+                            <p>This card has a special highlighted style to draw attention.</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-small btn-secondary">Explore</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">Image Card</div>
+                        <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                        <div class="card-body">
+                            <p>Cards can include images or visual content.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alerts Section -->
+            <section id="alerts" class="section">
+                <h1>Alerts</h1>
+                <div class="alert alert-success">
+                    ✓ Success alert - Operation completed successfully!
+                </div>
+                <div class="alert alert-warning">
+                    ⚠ Warning alert - Please check your input.
+                </div>
+                <div class="alert alert-error">
+                    ✕ Error alert - Something went wrong.
+                </div>
+                <div class="alert alert-info">
+                    ℹ Information alert - Here's some useful information.
+                </div>
+            </section>
+
+            <!-- Spacing Section -->
+            <section id="spacing" class="section">
+                <h1>Spacing Scale</h1>
+                <p>Our spacing scale follows a consistent pattern for maintaining rhythm and alignment.</p>
+                <div class="spacing-demo">
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: 40px;"></div>
+                        <p>4px (xs)</p>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: 80px;"></div>
+                        <p>8px (sm)</p>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: 160px;"></div>
+                        <p>16px (md)</p>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: 240px;"></div>
+                        <p>24px (lg)</p>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: 320px;"></div>
+                        <p>32px (xl)</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
